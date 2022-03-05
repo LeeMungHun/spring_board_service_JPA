@@ -4,5 +4,5 @@
 ### 이번 spring_board_service_JPA는 JPA를 이용해 MySQL에 데이터를 넣음.
 
 
-HTML  <---> Controller <---> Service <---> Repository
-l       DTO                           Entity
+HTML  <-DTO-> Controller <---> Service <-Entity-> Repository  
+
