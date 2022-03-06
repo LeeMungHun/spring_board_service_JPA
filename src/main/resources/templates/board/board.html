@@ -17,7 +17,7 @@
     <div class="py-5 text-center">
         <h2>게시글</h2>
     </div>
-
+    <form action="board.html" th:action method="post">
     <!-- 추가 -->
     <h2 th:if="${param.add_status}" th:text="'저장 완료'"></h2>
     <h2 th:if="${param.edit_status}" th:text="'수정 완료'"></h2>
@@ -46,12 +46,16 @@
         </div>
         <div class="col">
             <button class="w-100 btn btn-secondary btn-lg"
+                    type="submit">삭제</button>
+        </div>
+        <div class="col">
+            <button class="w-100 btn btn-secondary btn-lg"
                     onclick="location.href='boards.html'"
                     th:onclick="|location.href='@{/boards}'|"
                     type="button">목록</button>
         </div>
     </div>
-
+    </form>
 </div> <!-- /container -->
 </body>
 </html>

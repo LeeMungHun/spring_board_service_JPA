@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <link th:href="@{/css/bootstrap.min.css}"
-            href="../css/bootstrap.min.css" rel="stylesheet">
+          href="../css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 
@@ -17,7 +17,9 @@
             <button class="btn btn-primary float-end"
                     onclick="location.href='addForm.html'"
                     th:onclick="|location.href='@{/boards/write}'|"
-                    type="button">글쓰기</button>
+                    th:action
+                    type="button">글쓰기
+            </button>
         </div>
     </div>
 
@@ -29,20 +31,38 @@
                 <th>No</th>
                 <th>제목</th>
                 <th>작성자</th>
-
             </tr>
             </thead>
             <tbody>
             <tr th:each="board : ${boards}">
-                <td><a href="board.html" th:href="@{/boards/{boardId}(boardId=${board.id})}" th:text="${board.id}">게시글 번호</a></td>
+                <td><a href="board.html" th:href="@{/boards/{boardId}(boardId=${board.id})}" th:text="${board.id}">게시글
+                    번호</a></td>
                 <td><a href="board.html" th:href="@{|/boards/${board.id}|}" th:text="${board.title}">게시글 번호</a></td>
                 <td th:text="${board.writer}">작성자</td>
+            </tr>
+
+            <tr>
+                <div>
+                       <span th:each="pageNum : ${pageList}" th:inline="text">
+                           <a th:href="@{'/boards?page=' + ${pageNum}}">[[${pageNum}]]</a>
+                       </span>
+                </div>
+            </tr>
+            <tr>
+                <form action="boards" th:action="@{/boards/search}" method="get">
+                    <td><input type="text" class="form-control"
+                               placeholder="검색어 입력" name="searchTitle" maxlength="100"></td>
+                    <td>
+                        <button type="submit" class="btn btn-success">검색</button>
+                    </td>
+                </form>
             </tr>
             </tbody>
         </table>
     </div>
 
 </div> <!-- /container -->
+
 
 </body>
 </html>

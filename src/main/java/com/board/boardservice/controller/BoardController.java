@@ -19,17 +19,33 @@ public class BoardController {
         private final BoardService boardService;
 
     @GetMapping
-    public String boards(Model model) {
-        List<BoardDto> boards = boardService.findAll();
+    public String boards(Model model, @RequestParam(value = "page", defaultValue = "1") Integer pageNum) {
+        List<BoardDto> boards = boardService.findAll(pageNum);
+        Integer[] pageList = boardService.getPageList(pageNum);
         model.addAttribute("boards", boards);
+        model.addAttribute("pageList", pageList);
         return "board/boards";
     }
+
+    @GetMapping("/search")
+    public String searchBoard(@RequestParam String searchTitle,Model model){
+        List<BoardDto> boardDtoList = boardService.searchTitle(searchTitle);
+        model.addAttribute("boards", boardDtoList);
+        return "board/boards";
+    }
+
 
     @GetMapping("/{boardId}")
     public String board(@PathVariable long boardId,Model model){
         BoardDto boardDto = boardService.findBoard(boardId);
         model.addAttribute("board", boardDto);
         return "board/board";
+    }
+
+    @PostMapping("/{boardId}")
+    public String delete(@PathVariable Long boardId){
+        boardService.delete(boardId);
+        return "redirect:/boards";
     }
 
     @GetMapping("/write")
@@ -60,11 +76,21 @@ public class BoardController {
         return "redirect:/boards/{boardId}";
     }
 
+
+
     @PostConstruct
     public void init(){
         boardService.save(new BoardDto(10L,"title1", "content1", "작성자1"));
         boardService.save(new BoardDto(11L,"title2", "content2", "작성자2"));
+        boardService.save(new BoardDto(10L,"title1", "content1", "작성자1"));
+        boardService.save(new BoardDto(11L,"title2", "content2", "작성자2"));
+        boardService.save(new BoardDto(10L,"title1", "content1", "작성자1"));
+        boardService.save(new BoardDto(11L,"title2", "content2", "작성자2"));
+        boardService.save(new BoardDto(10L,"title1", "content1", "작성자1"));
+        boardService.save(new BoardDto(11L,"title2", "content2", "작성자2"));
+        boardService.save(new BoardDto(10L,"title1", "content1", "작성자1"));
+        boardService.save(new BoardDto(11L,"title2", "content2", "작성자2"));
+        boardService.save(new BoardDto(10L,"title1", "content1", "작성자1"));
+        boardService.save(new BoardDto(11L,"title2", "content2", "작성자2"));
     }
-
-
 }
