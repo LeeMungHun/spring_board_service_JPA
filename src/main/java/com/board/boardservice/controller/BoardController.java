@@ -30,6 +30,9 @@ public class BoardController {
     @GetMapping("/search")
     public String searchBoard(@RequestParam String searchTitle,Model model){
         List<BoardDto> boardDtoList = boardService.searchTitle(searchTitle);
+        if (boardDtoList.size() <= 0 || searchTitle.isEmpty()) {
+            return "redirect:/boards";
+        }
         model.addAttribute("boards", boardDtoList);
         return "board/boards";
     }
